@@ -2,7 +2,7 @@ exports.createPages = async ({ actions, graphql }) => {
   const result = await graphql(`
     {
       wpgraphql {
-        pages {
+        pages(first: 30) {
           nodes {
             id
             uri

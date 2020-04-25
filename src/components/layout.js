@@ -12,13 +12,20 @@ const Layout = ({ children }) => {
           title
           url
         }
-        menu(id: "TWVudToy") {
-          menuItems {
-            nodes {
-              id
-              label
-              url
-            }
+        # menu(id: "TWVudToy") {
+        #   menuItems {
+        #     nodes {
+        #       id
+        #       label
+        #       url
+        #     }
+        #   }
+        # }
+        menuItems(where: { location: PRIMARY }) {
+          nodes {
+            id
+            label
+            url
           }
         }
       }
@@ -27,7 +34,7 @@ const Layout = ({ children }) => {
 
   const { title, url } = data.wpgraphql.generalSettings
 
-  const items = data.wpgraphql.menu.menuItems.nodes.map(item => ({
+  const items = data.wpgraphql.menuItems.nodes.map(item => ({
     ...item,
     url: item.url.replace(url, ""),
   }))
