@@ -12,6 +12,7 @@ module.exports = {
       options: {
         typeName: "WPGraphQL",
         fieldName: "wpgraphql",
+        // url: "https://www.covid19nepal.support/graphql",
         url: "http://localhost/graphql",
       },
     },

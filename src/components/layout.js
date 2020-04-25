@@ -1,16 +1,48 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, useStaticQuery, graphql } from "gatsby"
 
 import "@wordpress/block-library/build-style/style.css"
 import "../styles/layout.css"
 
 const Layout = ({ children }) => {
+  const data = useStaticQuery(graphql`
+    query {
+      wpgraphql {
+        generalSettings {
+          title
+          url
+        }
+        menu(id: "TWVudToy") {
+          menuItems {
+            nodes {
+              id
+              label
+              url
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  const { title, url } = data.wpgraphql.generalSettings
+
+  const items = data.wpgraphql.menu.menuItems.nodes.map(item => ({
+    ...item,
+    url: item.url.replace(url, ""),
+  }))
+
   return (
     <>
       <header>
         <Link to="/" className="home">
-          WP to Jamstack
+          {title}
         </Link>
+        {items.map(item => (
+          <Link key={item.url} to={item.url}>
+            {item.label}
+          </Link>
+        ))}
       </header>
       <main>{children}</main>
     </>
